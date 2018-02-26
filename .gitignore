@@ -1,6 +1,17 @@
-*.class
+# remove un-needed files
+*.log
+*.tmp
+nbproject/
+bin/
+certs/
+logs/
+tmp/
+.sass-cache/
+target/
 
-# Package Files #
-#*.jar
-*.war
-*.ear
+# windows files
+desktop.ini
+
+# keep these files
+!.htaccess
+!.gitkeep
