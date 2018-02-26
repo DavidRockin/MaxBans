@@ -36,9 +36,8 @@ import org.bukkit.event.Listener;
 import org.maxgamer.maxbans.commands.ToggleChat;
 import org.maxgamer.maxbans.banmanager.SyncBanManager;
 import java.io.IOException;
-import org.maxgamer.maxbans.database.DatabaseCore;
-import org.maxgamer.maxbans.database.SQLiteCore;
-import org.maxgamer.maxbans.database.MySQLCore;
+
+import org.maxgamer.maxbans.database.*;
 import org.maxgamer.maxbans.util.Formatter;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.Bukkit;
@@ -47,7 +46,6 @@ import java.net.URL;
 import java.io.FileOutputStream;
 import java.io.File;
 import org.maxgamer.maxbans.util.Metrics;
-import org.maxgamer.maxbans.database.Database;
 import org.maxgamer.maxbans.listeners.ChatCommandListener;
 import org.maxgamer.maxbans.listeners.ChatListener;
 import org.maxgamer.maxbans.listeners.HeroChatListener;
@@ -132,6 +130,18 @@ public class MaxBans extends JavaPlugin
             final String name = dbConfig.getString("name");
             final String port = dbConfig.getString("port");
             dbCore = new MySQLCore(host, user, pass, name, port);
+
+            if (this.getConfig().getBoolean("database.fromSQLite")) {
+                final File sqliteFile = new File(this.getDataFolder() + "/bans.db");
+                Bukkit.getScheduler().runTaskAsynchronously(this,
+                        new Conversion(
+                                this,
+                                dbCore,
+                                new SQLiteCore(sqliteFile),
+                                sqliteFile
+                        ))
+                ;
+            }
         }
         else {
             this.getLogger().info("Using SQLite");
