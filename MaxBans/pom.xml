@@ -3,8 +3,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>br.net.fabiozumbi12</groupId>
-  <artifactId>MaxBans</artifactId>
-  <version>2.7.0</version>
+  <artifactId>MaxBansPlus</artifactId>
+  <version>2.8.0</version>
   <packaging>jar</packaging>
 
   <name>MaxBans</name>
@@ -46,7 +46,7 @@
   </dependencies>
   
   <build>
-    <finalName>${project.name}</finalName>
+    <finalName>${artifactId}-${version}</finalName>
     <defaultGoal>clean package install</defaultGoal>
     <resources>
         <resource>
